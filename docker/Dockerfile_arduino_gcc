@@ -1,0 +1,37 @@
+FROM ubuntu:14.04
+
+RUN apt-get update --fix-missing
+RUN apt-get install -y build-essential python-pip cmake git libeigen3-dev
+RUN pip install platformio
+
+RUN pio lib --global install Eigen
+
+# pkl
+WORKDIR /root/
+COPY . .
+
+RUN pio lib --global install file:///root/pkl
+
+WORKDIR /root/
+RUN git clone -b arduino_due https://github.com/sergeant-wizard/orocos_kinematics_dynamics
+RUN pio lib --global install file:///root/orocos_kinematics_dynamics/orocos_kdl
+
+# Just to make config.h
+WORKDIR orocos_kinematics_dynamics/orocos_kdl/build
+RUN cmake ..
+RUN cp src/config.h /root/.platformio/lib/orocos_kdl/src
+
+# this work around is needed to do "include <kdl/foo>"
+WORKDIR /root/.platformio/lib/orocos_kdl/
+RUN mv src src_
+RUN mkdir src
+RUN mv src_ src/kdl
+
+# this work around is needed to do "include <Eigen/foo>"
+WORKDIR /root/.platformio/lib/Eigen_ID1001
+RUN mv src src_
+RUN mkdir src
+RUN mv src_ src/Eigen
+
+WORKDIR /root/benchmark/arduino/
+RUN pio run

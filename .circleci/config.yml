@@ -1,0 +1,50 @@
+version: 2
+jobs:
+  build_ubuntu_gcc:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: build docker for ubuntu gcc
+          command: docker build -t ubuntu_gcc -f docker/Dockerfile_ubuntu_gcc .
+      - run:
+          name: test pkl
+          command: docker run -t ubuntu_gcc "/root/pkl/tests/pkl_test"
+      - run:
+          name: test kdl wrapper
+          command: docker run -t ubuntu_gcc "/root/kdl_wrapper/tests/kdl_wrapper_test"
+  build_ubuntu_clang:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: build docker for ubuntu clang
+          command: docker build -t ubuntu_clang -f docker/Dockerfile_ubuntu_clang .
+      - run:
+          name: test pkl
+          command: docker run -t ubuntu_clang "/root/pkl/tests/pkl_test"
+  build_arch_gcc:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: build docker for arch gcc
+          command: docker build -t arch_gcc -f docker/Dockerfile_arch_gcc .
+      - run:
+          name: test pkl
+          command: docker run -t arch_gcc "/root/pkl/tests/pkl_test"
+  build_arduino_gcc:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: build docker for arduino gcc
+          command: docker build -t arduino_gcc -f docker/Dockerfile_arduino_gcc .
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build_ubuntu_gcc
+      - build_ubuntu_clang
+      - build_arch_gcc
+      - build_arduino_gcc

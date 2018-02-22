@@ -10,7 +10,7 @@ WORKDIR googletest
 RUN mkdir build
 WORKDIR build
 RUN cmake -DCMAKE_BUILD_TYPE=Release ..
-RUN make -j4
+RUN make
 RUN make install
 
 # google benchmark
@@ -20,7 +20,7 @@ WORKDIR benchmark
 RUN mkdir build
 WORKDIR build
 RUN cmake -DCMAKE_BUILD_TYPE=Release ..
-RUN make -j4
+RUN make
 RUN make install
 
 # orocos kdl
@@ -30,7 +30,7 @@ WORKDIR orocos_kinematics_dynamics/orocos_kdl/
 RUN mkdir build
 WORKDIR build
 RUN cmake -DCMAKE_BUILD_TYPE=Release ..
-RUN make -j4
+RUN make
 RUN make install
 
 # pkl
@@ -39,13 +39,13 @@ COPY . .
 
 WORKDIR /root/pkl
 RUN cmake -DCMAKE_BUILD_TYPE=Release .
-RUN make -j4
+RUN make
 RUN make install
 
 WORKDIR /root/benchmark/kdl
 RUN cmake -DCMAKE_BUILD_TYPE=Release .
-RUN make -j4
+RUN make
 
 WORKDIR /root/pkl/tests
 RUN cmake -DCMAKE_BUILD_TYPE=Release .
-RUN make -j4
+RUN make

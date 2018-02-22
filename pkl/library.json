@@ -1,0 +1,13 @@
+{
+    "name": "pkl",
+    "version": "0.0.0",
+    "keywords": "kinematics",
+    "description": "preferred kinematics library",
+    "frameworks": ["arduino"],
+    "platforms": ["atmelsam"],
+    "build": {
+        "flags": [
+            "-I include/"
+        ]
+    }
+}

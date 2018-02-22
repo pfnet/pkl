@@ -1,7 +1,7 @@
-FROM ubuntu:14.04
+FROM ros:indigo
 
 RUN apt-get update
-RUN apt-get install -y git cmake build-essential libeigen3-dev
+RUN apt-get install -y git cmake build-essential libeigen3-dev ros-indigo-kdl-parser
 
 # gtest
 WORKDIR /root/
@@ -41,6 +41,15 @@ WORKDIR /root/pkl
 RUN cmake -DCMAKE_BUILD_TYPE=Release .
 RUN make
 RUN make install
+
+WORKDIR /root/kdl_wrapper
+RUN bash -c "source /opt/ros/indigo/setup.bash && cmake -DCMAKE_BUILD_TYPE=Release ."
+RUN make
+RUN make install
+
+WORKDIR /root/kdl_wrapper/tests
+RUN bash -c "source /opt/ros/indigo/setup.bash && cmake -DCMAKE_BUILD_TYPE=Release ."
+RUN make
 
 WORKDIR /root/benchmark/kdl
 RUN cmake -DCMAKE_BUILD_TYPE=Release .

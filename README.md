@@ -1,5 +1,5 @@
 # PKL
-Preferred Kinematics Library
+Preferred Kinematic Library
 
 ## Requirements
 

@@ -1,6 +1,8 @@
 # PKL
 Preferred Kinematic Library
 
+[![CircleCI](https://circleci.com/gh/pfnet/pkl.svg?style=svg)](https://circleci.com/gh/pfnet/pkl)
+
 ## Requirements
 
 - Eigen3

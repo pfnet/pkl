@@ -23,16 +23,6 @@ jobs:
       - run:
           name: test pkl
           command: docker run -t ubuntu_clang "/root/pkl/tests/pkl_test"
-  build_arch_gcc:
-    machine: true
-    steps:
-      - checkout
-      - run:
-          name: build docker for arch gcc
-          command: docker build -t arch_gcc -f docker/Dockerfile_arch_gcc .
-      - run:
-          name: test pkl
-          command: docker run -t arch_gcc "/root/pkl/tests/pkl_test"
   build_arduino_gcc:
     machine: true
     steps:
@@ -46,5 +36,4 @@ workflows:
     jobs:
       - build_ubuntu_gcc
       - build_ubuntu_clang
-      - build_arch_gcc
       - build_arduino_gcc
